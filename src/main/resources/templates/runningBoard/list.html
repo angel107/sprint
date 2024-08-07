@@ -1,0 +1,95 @@
+
+<th:block th:replace="~{layout/basic :: setContent(~{this::content} )}">
+
+	<th:block th:fragment="content">
+		<!DOCTYPE html>
+		<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<!---------------------fontawesome------------------>
+<script src="https://kit.fontawesome.com/fc8d331d05.js"
+	crossorigin="anonymous"></script>
+<!-- templates css -->
+<link href="/css/list.css" rel="stylesheet">
+<!--           js              -->
+<script src="/js/list.js"></script>
+
+
+
+</head>
+<body>
+	<div class="notice-l-container">
+		<!--글 박스 집합-->
+		<div class="list-register">
+			<a th:href="@{/runningBoard/register}"> <input type="button"
+				value="등록"></a>
+		</div>
+		<div th:each="dto : ${list}" class="notice-m-container"  
+		 th:onclick="'window.location.href=\'/runningBoard/read?no=' + ${dto.no} +'&page=' + (${list.number + 1}) + '\''"
+			style="cursor: pointer;">
+			<!-- 글 박스 -->
+			<div class="notice-first-info">
+				<!-- 로고 + 이름박스 라인 -->
+				<div class="flex flex-col items-center">
+					<!-- 로고 + 이름박스-->
+					<i class="fa-solid fa-location-dot"></i> <span
+						class="notice-detail-info">[[${dto.location}]]</span>
+				</div>
+
+				<div class="flex flex-col items-center">
+					<!-- 로고 + 이름박스-->
+					<i class="fa-regular fa-calendar"></i> <span
+						class="notice-detail-info">[[${#temporals.format(dto.runningDate, 'yyyy-MM-dd')}]]</span>
+				</div>
+
+				<div class="flex flex-col items-center">
+					<!-- 로고 + 이름박스-->
+					<i class="fa-solid fa-hashtag"></i> <span
+						class="notice-detail-info">[[${dto.no}]]</span>
+				</div>
+
+			</div>
+			<div class="content-box">
+				<h3 class="main-title">[[${dto.title}]]</h3>
+			</div>
+			<div class="bottom-logo-info"
+				onclick="event.stopPropagation(); addLike();">
+				<div class="people-info">
+					<i class="fa-solid fa-user"></i> <span
+						class="people-count bottom-logo-font">[[${dto.countView}]]</span>
+				</div>
+				<div class="heart-info">
+					<button class="heartBtn"
+						onclick="event.stopPropagation(); addLike();">
+						<i class="fa-regular fa-heart"></i>
+					</button>
+					<span class="like_count bottom-logo-font">0개</span>
+					</button>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+		<ul class="pagination" th:if="${list.totalPages > 0}">
+	<th:block th:each="page : ${#numbers.sequence(1, list.totalPages)}">
+		<th:block th:if="${list.number+1 == page}">
+			<li class="page-item active">
+				<!-- 리스트 주소 입력하고, 페이지번호를 파라미터로 전달 -->
+				<a class="page-link" th:href="@{/runningBoard/list(page = ${page})}">[[${page}]]</a>
+			</li>
+		</th:block>
+		<th:block th:unless="${list.number+1 == page}">
+			<li class="page-item">
+				<!-- 리스트 주소 입력하고, 페이지번호를 파라미터로 전달 -->
+				<a class="page-link" th:href="@{/runningBoard/list(page = ${page})}">[[${page}]]</a>
+			</li>
+		</th:block>
+	</th:block>
+</ul>
+	</body>
+		</html>
+	</th:block>
+</th:block>
+

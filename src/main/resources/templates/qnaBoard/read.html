@@ -1,0 +1,167 @@
+<th:block th:replace="~{layout/basic :: setContent(~{this::content} )}">
+
+    <th:block th:fragment="content">
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+            <link href="/css/detail.css" rel="stylesheet">
+            <script src="https://kit.fontawesome.com/fc8d331d05.js" crossorigin="anonymous"></script>
+            <script src="/js/list.js"></script>
+            <script src="/js/map.js"></script>
+
+        </head>
+        <body>
+        <div class="read-l-container">
+            <div class="read-m-container">
+                <div class="content-head">
+                    <div class="container-cate">
+                        <h3><a href="/qnaBoard/list">QnA</a></h3>
+                    </div>
+                    <div class="container-title">
+                        <h2>[[${dto.title}]]</h2>
+                    </div>
+                    <div class="container-ID">
+                        <h5>[[${dto.writer}]]</h5>
+                    </div>
+
+                    <div class="notice-first-info">
+
+                        <div class="flex flex-col items-center">
+                            <i class="fa-regular fa-calendar"></i>
+                            <span class="notice-detail-info">[[${#temporals.format(dto.regDate, 'yyyy-MM-dd')}]]</span>
+                        </div>
+
+                        <div class="flex flex-col items-center">
+                            <i class="fa-regular fa-clock"></i>
+                            <span class="notice-detail-info">[[${#temporals.format(dto.regDate,
+							'HH:mm')}]]</span>
+                        </div>
+                        <div class="flex flex-col items-right">
+                            <span >조회수 [[${dto.countView}]]</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-post">
+
+
+                    <h5>
+                        [[${dto.content}]]
+                    </h5>
+
+
+
+
+                </div>
+
+                <div class="bottom-logo-info">
+                    <div class="comment-count">
+                        <i class="fa-regular fa-comment"></i>
+                        <span id="comment_count bottom-logo-font">0</span>
+                    </div>
+                    <div class="heart-info">
+                        <button class="heartBtn" th:data-no="${dto.no}" th:data-type="qna">
+                            <i class="fa-regular fa-heart"></i>
+                            <span class="like_count bottom-logo-font" th:id="'like-count-' + ${dto.no}">[[${dto.countLike}]]</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="content-comment">
+                    <input id="comment-input" placeholder="댓글을 입력해 주세요.">
+                    <button type="button" id="submit" onclick="registerComment()">등록</button>
+                </div>
+                <div class="content-comment-list" id="content-comment-list">
+
+                </div>
+
+            </div>
+            <div class="bottom-button">
+                <a th:href="@{/qnaBoard/modify(no =${dto.no})}" th:if="${isAuthor}">
+                    <button type="button">수정</button>
+                </a>
+
+                <a th:href="@{/qnaBoard/list(no=${page})}">
+                    <button type="button">목록</button>
+                </a>
+            </div>
+        </div>
+        </body>
+        </html>
+    </th:block>
+</th:block>
+<script th:inline="javascript">
+    // 문서가 준비되면 showComment 함수 호출
+    $(document).ready(function() {
+        showComment();
+    })
+
+    // 댓글을 보여주는 함수
+    function showComment(){
+        // 컨트롤러에서 전달받은 게시물 정보 저장
+        var board = [[${dto}]];
+        // 댓글 보기 부분 태그 가져오기
+        let comment_div = $('#content-comment-list');
+
+        $.ajax({
+            type: "GET",
+            url: "/qBoardComment/list?boardNo="+board.no,
+            success: function(response){
+                // 자식 엘리먼트 모두 지우기
+                comment_div.empty();
+
+                let commentlist = response;
+                // 화면에 댓글 목록 출력하기
+                for(i in commentlist){
+                    let comment = commentlist[i];
+                    let writer_div = '<div class="comment-writer">' + comment.writer + '</div>';
+                    let content_div = '<div class="comment-content">' + comment.content + '</div>';
+                    let delete_btn = '<div class="comment-delete"><a href="javascript:removeComment('+comment.commentNo+')">삭제</a></div>';
+                    let comment_html = '<div class="comment-item">' + writer_div + content_div + delete_btn + '</div>';
+                    comment_div.append(comment_html);
+                }
+            }
+        });
+    }
+
+    // 댓글을 등록하는 함수
+    function registerComment() {
+        var board = [[${dto}]];
+        let commentContent = document.getElementById("comment-input");
+        let commentDto =
+            {
+                'commentNo':0,
+                'boardNo':board.no,
+                'content': commentContent.value
+            }
+
+        $.ajax({
+            type: "POST",
+            data: commentDto,
+            url: "/qBoardComment/register",
+            success: function(response){
+                if(response.success){
+                    commentContent.value = null;
+                    showComment();
+                }
+            }
+        });
+    }
+
+    // 댓글을 삭제하는 함수
+    function removeComment(commentNo){
+        var board = [[${dto}]];
+        $.ajax({
+            type: "GET",
+            url: "/qBoardComment/remove?commentNo="+commentNo,
+            success: function(response){
+                if(response.success){
+                    showComment()
+                }
+            }
+        });
+    }
+</script>

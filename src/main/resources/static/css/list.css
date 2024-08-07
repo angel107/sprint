@@ -1,0 +1,127 @@
+
+
+.body {
+    margin: 0;
+    padding: 0;
+}
+/* 공지사항 컨테이너 스타일링 */
+.notice-l-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box; 
+}
+
+/* 개별 공지사항 박스 스타일링 */
+.notice-m-container {
+    display: flex;
+    flex-direction: column; 
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    width: 80%;
+    align-items: center; /* 요소들을 가운데 정렬 */
+    margin: 15px;
+  
+}
+
+/* 공지사항 상세 정보 라인 스타일링 */
+.notice-first-info {
+    width: 85%;
+    height: 20%;
+    margin: 13px;
+    display: flex;
+    justify-content: flex-start; /* 왼쪽 정렬 */
+    gap: 10px; /* 아이템 간 간격 조정 */
+    border-bottom: 1px solid #000; /* 하단 경계선 추가 */
+    padding: 15px;
+
+    
+}
+
+/* 아이콘과 텍스트를 포함하는 박스 스타일링 */
+.flex {
+   
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 상세 정보 텍스트 스타일링 */
+.notice-detail-info {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333333;
+}
+.content-box{
+    padding: 15px;
+    margin-top: 0px;
+}
+
+/* 박스 하단부분 및 아이콘 폰트 */
+
+
+
+.heartBtn {
+    border: none; /* 버튼의 테두리 제거 */
+    background: none; /* 버튼의 배경색 제거 */
+    outline: none; /* 클릭 시 생기는 아웃라인 제거 */
+    cursor: pointer; /* 마우스 커서가 버튼 위에 있을 때 손가락 모양으로 변경 */
+    pointer-events: auto;
+    font-size: 24px;
+    
+}
+
+.people-info{
+    font-size: 24px;
+    position: relative;
+    top: -5px; /* 10px만큼 위로 이동 */
+}
+.bottom-logo-info{
+    pointer-events: none;
+    display: flex; 
+    width: 85%;
+    height: 20%;
+    margin: 13px;
+    display: flex;
+    justify-content: flex-start; /* 왼쪽 정렬 */
+    gap: 18px; /* 아이템 간 간격 조정 */
+    border-top: 1px solid #000; /* 상단 경계선 추가 */
+    padding: 15px;
+
+}
+.like_count, .people-count{
+    font-size: 18px;
+   
+}
+
+h3.main-title {
+    margin: 0px;
+}
+
+.list-register{
+	width: 80%;
+	margin: 20px;
+	text-align: right; /* 텍스트 정렬을 오른쪽으로 변경 */
+}
+.list-register input {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #268dce;
+    color: white;
+  	font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 90px;
+    height: auto;
+    padding: 10px 20px;
+}
+
+.list-register input:hover {
+    background-color: #717ff5;
+}
+.pagination{
+	display: flex;
+    justify-content: center;
+}

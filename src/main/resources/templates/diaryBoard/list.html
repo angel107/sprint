@@ -1,0 +1,69 @@
+
+<th:block th:replace="~{layout/basic :: setContent(~{this::content} )}">
+
+	<th:block th:fragment="content">  <!--조각코드 불러오기-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/fc8d331d05.js" crossorigin="anonymous"></script>
+    <!-- templates css -->
+    <link href="/css/mara-list.css" rel="stylesheet">
+    <!-- js -->
+    <script src="/js/list.js"></script>
+
+</head>
+<body>
+    <div class="m-l-container">
+    <div class="list-register">
+            <a th:href="@{/diaryBoard/register}">
+                <input type="button" value="등록">
+            </a>
+        </div>
+        <div th:each="dto : ${list}" class="m-m-container"
+		 th:onclick="'window.location.href=\'/diaryBoard/read?no=' + ${dto.no} +'&page=' + (${list.number + 1}) + '\''"
+			style="cursor: pointer;">
+            <div class="notice-first-info">
+
+                <div class="obj-info">
+                        <i class="fa-regular fa-calendar"></i>
+                        <span class="notice-detail-info">[[${#temporals.format(dto.regDate, 'yyyy-MM-dd')}]]</span>
+
+                </div>
+
+                <div class="obj-info">
+                        <i class="fa-regular fa-clock"></i>
+                        <span class="notice-detail-info">[[${#temporals.format(dto.regDate, 'HH:ss')}]]</span>
+                </div>
+            </div>
+
+            <div class="img-container">
+                <img th:src="'/uploadfile/'+${dto.imgPath}" alt="Post image" >
+            </div>
+
+            <div class="info-container">
+                <div class="people-info">
+                    <i class="fa-solid fa-user"></i>
+                    <span class="people-count bottom-logo-font">[[${dto.countView}]]</span>
+                </div>
+                <div class="heart-info">
+                        <i class="fa-regular fa-heart"></i>
+                        <span class="like_count bottom-logo-font" >[[${dto.countLike}]]</span>
+                </div>
+            </div>
+            <div class="m-title">
+                <h3>[[${dto.title}]]</h3>
+            </div>
+
+        </div>
+
+
+    </div>
+</body>
+</html>
+
+</th:block>
+</th:block>

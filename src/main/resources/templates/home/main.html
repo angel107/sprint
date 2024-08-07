@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>SprintX</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="/img/favicon.png" rel="icon">
+  <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  
+
+  <!-- Template Main CSS File -->
+  <link href="css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: FlexStart
+  * Updated: Jan 29 2024 with Bootstrap v5.3.2
+  * Template URL: https://bootstrapmade.com/flexstart-bootstrap-startup-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+      <a href="/" class="logo d-flex align-items-center">
+        <img src="/img/sprintLogo.png" alt="SprintX">
+      </a>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+        
+         <li class="dropdown"><a href="/runningBoard/list"><span>러닝</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+             <li><a href="/runningBoard/list">참가</a></li>
+              <li><a href="/runningBoard/register">모집</a></li>
+            </ul>
+          </li>
+        
+         
+          <li class="dropdown"><a href="/marathonBoard/list"><span>마라톤</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="/marathonBoard/list">참가</a></li>
+              <li><a href="/marathonBoard/register">등록</a></li>
+            </ul>
+          </li>
+
+         
+         
+           <li class="dropdown"> <a class="nav-link scrollto" href="#learnRun">커뮤니티<i class="bi bi-chevron-down"></i></a>
+         	<ul>
+             <li><a href="/qnaBoard/list">QnA</a></li>
+              <li><a href="https://open.kakao.com/o/gVZDDvfg">러닝크루</a></li>
+              <li><a href="https://runninglife.co.kr/contents/getAreaAllCrew/capital/">우리동네</a></li>
+               <li><a href="/diaryBoard/list">러닝일기</a></li>
+            </ul>
+         </li>
+
+         <li class="dropdown" > <a class="nav-link scrollto" href="#learnRun">LEARN & RUN<i class="bi bi-chevron-down"></i></a>
+         	<ul>
+             <li><a href="https://www.youtube.com/results?search_query=%EB%8B%AC%EB%A6%AC%EA%B8%B0+%EC%A3%BC%EB%B2%95">주법</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=%EC%8A%A4%ED%8A%B8%EB%A0%88%EC%B9%AD">스트레칭</a></li>
+            </ul>
+         </li>
+
+          <form class="search-container" action="/runningBoard/search" method="get" id="searchForm" >
+			<div class="search">
+				<input type="text" placeholder="검색어 입력" name="keyword"  >
+				<img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" id="searchImage">
+			</div>
+			<script>
+				document.getElementById('searchImage').addEventListener('click', function() {
+					document.getElementById('searchForm').submit();
+				});
+			</script>
+          </form>
+                    <li th:if="${loggedInUser != null}">
+                        <a th:href="@{'/member/modify?id=' + ${loggedInUser.id}}">
+                            <img sec:authorize="isAuthenticated()" src="/img/user.png" class="profile-image">
+                        </a>
+                    </li>
+			        <li><a sec:authorize="isAuthenticated()" class="nav-link scrollto" href="/logout">로그아웃</a></li>
+
+			        <li><a sec:authorize ="isAnonymous()" class="nav-link scrollto" href="/customlogin">로그인</a></li>
+			        <li><a sec:authorize ="isAnonymous()" class="nav-link scrollto" href="/register">회원가입</a></li>
+
+				</ul>
+        
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <!-- 메인    -->
+  <section id="hero" class="hero d-flex align-items-center">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 d-flex flex-column justify-content-center">
+          <h1 data-aos="fade-up">러닝 매칭부터 커뮤니티까지</h1>
+          <h3 data-aos="fade-up" data-aos-delay="300">요즘 러너들의 필수 커뮤니티, 스프린트</h3>
+          <div data-aos="fade-up" data-aos-delay="500">
+            <div class="text-center text-lg-start">
+              <a href="/runningBoard/list" class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">
+                <span>러닝하기</span>
+                <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 hero-img" data-aos="zoom-out" data-aos-delay="200">
+            <a href="https://www.incheonmarathon.co.kr/index.php"><img src="/img/marathon.png" class="img-filuid" style="width: 80%;" alt=""></a>
+        </div>
+      </div>
+    </div>
+
+
+  </section><!-- End Hero -->
+
+<div style="position: relative; padding-bottom: 28.125%; height: 0; overflow: hidden; width: 50%; margin-right:auto; margin-left: auto; margin-bottom: 10px;margin-top: 10px;" > <!-- youtube api 사용 -->
+    <iframe id="ytplayer" type="text/html" width="360" height="202.5"
+            src="https://www.youtube.com/embed/gF0rrpMH-Jo?autoplay=1&mute=1"
+            frameborder="0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen>
+    </iframe>
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5);"></div>
+</div>
+
+
+
+   <!-- End About Section -->
+
+    <!-- ======= Values Section ======= -->
+   
+
+    
+
+  
+
+  
+
+
+    
+  
+
+   
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+
+
+    <div class="footer-top">
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-5 col-md-12 footer-info">
+            <a href="index.html" class="logo d-flex align-items-center">
+              <span>Sprint</span>
+            </a>
+            <p>러닝 매칭부터 커뮤니티까지 요즘 러너들의 필수 커뮤니티, 스프린트</p>
+            <div class="social-links mt-3">
+              <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+              <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+              <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+              <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Home</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">About us</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Services</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Terms of service</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Privacy policy</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-2 col-6 footer-links">
+            <h4>Our Services</h4>
+            <ul>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Web Design</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Web Development</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Product Management</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Marketing</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Graphic Design</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+            <h4>Contact Us</h4>
+            <p>
+              A108 Adam Street <br>
+              New York, NY 535022<br>
+              United States <br><br>
+              <strong>Phone:</strong> +1 5589 55488 55<br>
+              <strong>Email:</strong> info@example.com<br>
+            </p>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="/vendor/aos/aos.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="/js/main.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,276 @@
+<th:block th:replace="~{layout/basic :: setContent(~{this::content} )}">
+
+	<th:block th:fragment="content">
+		<!DOCTYPE html>
+		<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link href="/css/detail.css" rel="stylesheet">
+<script src="https://kit.fontawesome.com/fc8d331d05.js"
+	crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="/js/list.js"></script>
+<script src="/js/map.js"></script>
+
+</head>
+<body>
+	<div class="read-l-container">
+		<div class="read-m-container">
+			<div class="content-head">
+				<div class="container-cate">
+					<h3>
+						<a href="/runningBoard/list">러닝 참가</a>
+					</h3>
+				</div>
+				<div class="container-title">
+					<h2>[[${dto.title}]]</h2>
+				</div>
+				<div class="container-ID">
+					<h5>[[${dto.writer}]]</h5>
+				</div>
+				
+				
+				<div class="info-l-container">
+				<div class="info-container">
+				<div class="notice-first-info">
+					<div class="flex flex-col items-center">
+						<i class="fa-solid fa-location-dot"></i> <span
+							class="notice-detail-info">[[${dto.location}]]</span>
+					</div>
+
+					<div class="flex flex-col items-center">
+						<i class="fa-regular fa-calendar"></i> <span
+							class="notice-detail-info">[[${#temporals.format(dto.runningDate,
+							'yyyy-MM-dd')}]]</span>
+					</div>
+
+					<div class="flex flex-col items-center">
+						<i class="fa-regular fa-clock"></i> <span
+							class="notice-detail-info">[[${#temporals.format(dto.runningDate,
+							'HH:mm')}]]</span>
+					</div>
+					<div class="flex flex-col items-right">
+						<span >조회수 [[${dto.countView}]]</span>
+					</div>
+				</div>
+				<div class="weather-container" >
+				<!-- Makin-Things / weather-icons -->
+				<div class="weather-info" th:each="item : ${weather}"
+					th:if="${item.forecastTime == 0}">
+					<img
+						th:src="${item.weather == '맑음' ? '/img/weather/day.svg' : 
+                  item.weather == '구름많음' ? '/img/weather/cloudy-original.svg' : 
+                  item.weather == '흐리고 한때 비 곳' ? '/img/weather/rainy-3.svg' : 
+                  item.weather == '구름많고 한때 비 곳' ? '/img/weather/rainy-3.svg' :
+                    item.weather == '흐림' ? '/img/weather/cloudy-day-1.svg': 
+                  '/images/default.png'}"
+                  
+				alt="Weather Icon">
+				</div>
+				</div>
+			</div>
+			</div>
+			</div>
+			<div class="content-post">
+				<h5>[[${dto.content}]]</h5>
+				<div id="map" style="width: 500px; height: 400px;"></div>
+				<input type="hidden" id="location" th:value="${dto.location}">
+			</div>
+
+			<div class="bottom-logo-info">
+				<div class="comment-count">
+					<i class="fa-regular fa-comment"></i> <span
+						id="comment_count bottom-logo-font">0</span>
+				</div>
+				<div class="heart-info">
+					<button class="heartBtn" th:data-no="${dto.no}" th:data-type="running">
+						<i class="fa-regular fa-heart"></i>
+                        <span class="like_count bottom-logo-font" th:id="'like-count-' + ${dto.no}">[[${dto.countLike}]]</span>
+                    </button>
+				</div>
+
+				<div class="participate-info">
+					<div class="user-icon">
+						<i class="fa-solid fa-user bottom-logo-font"></i>
+						<div class="tooltip"> </div>
+					</div>
+					<button class="participateBtn" onclick="joining();">같이뛰기</button>
+
+				</div>
+			</div>
+
+			<div class="content-comment">
+				<input id="comment-input" placeholder="댓글을 입력해 주세요.">
+				<button type="button" id="submit" onclick="registerComment()">등록</button>
+			</div>
+			<div class="content-comment-list" id="content-comment-list"></div>
+		</div>
+		<div class="bottom-button">
+			<a th:href="@{/runningBoard/modify(no = ${dto.no})}"  th:if="${isAuthor}">
+				<button type="button">수정</button>
+			</a>
+			<a th:href="@{/runningBoard/list(no=${page})}">
+				<button type="button">목록</button>
+			</a>
+		</div>
+	</div>
+</body>
+		</html>
+	</th:block>
+</th:block>
+<!-- 댓글 이벤트 처리 -->
+<!-- 댓글 이벤트 처리 -->
+<script th:inline="javascript">
+
+	$(document).ready(function() {
+		showComment();
+		
+	})
+
+	function showComment(){
+		//컨트롤러에서 전달받은 게시물 정보 저장
+		var board = [[${dto}]];
+		// 댓글 보기 부분 태그 가져오기
+		let comment_div = $('#content-comment-list');
+		
+		$.ajax({
+		type: "GET",
+		url: "/rBoardcomment/list?boardNo="+board.no,
+		success: function(response){
+			
+			// 자식 엘리먼트 모두 지우기
+			comment_div.empty();
+			
+			let commentlist = response;
+			// 화면에 댓글 목록 출력하기
+			for(i in commentlist){
+				 let comment = commentlist[i];
+				 let writer_div = '<div class="comment-writer">' + comment.writer + '</div>';
+				 let content_div = '<div class="comment-content">' + comment.content + '</div>';
+				 let delete_btn = '<div class="comment-delete"><a href="javascript:removeComment('+comment.commentNo+')">삭제</a></div>';
+				 let comment_html = '<div class="comment-item">' + writer_div + content_div + delete_btn + '</div>';
+				 comment_div.append(comment_html);
+			}
+		}
+		});
+	}
+
+	function registerComment() {
+		var board = [[${dto}]];
+		let commentContent = document.getElementById("comment-input");
+		let commentDto =
+		{
+				'commentNo':0,
+				'boardNo':board.no,
+				'content': commentContent.value		
+				
+				
+		}
+	
+		$.ajax({
+			type: "POST",
+			data: commentDto,
+			url: "/rBoardcomment/register",
+			success: function(response){
+				if(response.success){
+					commentContent.value = null;
+					showComment();
+				}
+			}
+			});
+	}
+
+	function removeComment(commentNo){
+		var board = [[${dto}]];
+		
+		 $.ajax({
+		      type: "GET",
+		      url: "/rBoardcomment/remove?commentNo="+commentNo,
+		      success: function(response){
+				if(response.success){
+					showComment()
+					}
+				}
+		});
+	}
+	$(document).ready(function() {
+		getAttendeesList()
+		
+	})
+	
+	
+	function joining(){
+    var running = [[${dto}]];
+    $.ajax({
+        type: "POST",
+        url: "/joinMember/joinRunning?runningNo="+running.no,
+        success: function(response){
+            if (response == "joined") {
+                alert("참가 성공!");
+            } else if (response == "cancelled") {
+                alert("참가 취소 성공!");
+            }
+            getAttendeesList();  // 참가 또는 취소 후에 참가자 목록을 업데이트합니다.
+        },
+        error: function(response){
+            alert("참가 또는 취소 실패");
+        }
+    });
+}
+	function getAttendeesList(){
+	    var running = [[${dto}]];
+	    let running_div = $('.tooltip');
+	    $.ajax({
+	        type: "GET", 
+	        url: "/joinMember/joinList?runningNo="+running.no,
+	        success: function(response){
+	            let runninglist = response;
+
+	            running_div.empty(); // 먼저 기존에 출력되었던 내용을 지웁니다.
+
+	            if(running_div.is(':empty')) {
+	                running_div.append('참석자<br>'); // '참석자' 글씨와 줄바꿈을 추가합니다.
+	            }
+
+	            for(let i in runninglist) {
+	                let runningMember = runninglist[i];
+	                let writer_div = runningMember.runnerId;
+	                let no_div = runningMember.joinNo; // joinNo를 가져옵니다.
+	                let running_html = writer_div + '<br>'; // 수정: 번호와 이름 사이에 '.'과 공백을 추가해 가독성을 높입니다.
+	                running_div.append(running_html);
+	            } 
+	        },
+	        error: function(response){
+	            alert("참석자 명단을 가져오는 데 실패했습니다.");
+	        }
+	    });
+	}
+	function cancelJoin(runningNo, joinNo){
+	    $.ajax({
+	        type: "get",
+	        url: "/joinMember/cancelJoin?&joinNo="+joinNo,
+	        success: function(response){
+	            alert("참가 취소 성공!");
+	            getAttendeesList(); // 참가자 목록을 다시 불러옵니다.
+	        },
+	        error: function(response){
+	            alert("참가 취소 실패");
+	        }
+	    });
+	}
+
+    $(".removeBtn").click(function(){
+    	form
+            .attr("action", "/runningBoard/remove")
+            .attr("method","post")
+            .submit();
+    });
+
+</script>
+
+
+
+

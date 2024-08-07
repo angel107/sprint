@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content=""/>
+	<meta name="author" content=""/>
+	<title>Document</title>
+	<!-- =========================================================================== -->
+	<link rel="stylesheet" type="text/css" href="/css/login.css">
+	<!-- =========================================================================== -->
+	<script src="https://kit.fontawesome.com/fc8d331d05.js" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script> <!-- Kakao Login API-->
+
+</head>
+<body>
+<div class="topbar-login">
+	<a href="main.html"> <img class="sprint-logo"
+							  src="/img/sprintLogo.png" alt="Your Logo" id="logo">
+	</a>
+</div>
+<div class="login-wrapper">
+	<h2>Login</h2>
+	<form  th:action="@{/login}" th:method="post" id="login-form">
+		<div th:if="${error}">
+			<p id="valid" style="color: red; font-size:12px;" th:text="${exception}">Default error message</p>
+		</div>
+		<input type="text" id="username" name="username" placeholder="Email">
+		<input type="password" id="password" name="password" placeholder="Password">
+		<label for="remember-check">
+			<input type="checkbox" id="remember-check"> 아이디 저장하기
+		</label> <a href="/register" id="signup-link">회원가입</a>
+		<input class="login-set" id="login" type="submit" value="로그인">
+		<div class="social-menu">
+			<ul>
+				<li><a href=""><i class="fa fa-facebook"></i></a></li>
+				<li><a href="/oauth2/authorization/google"><i class="fa fa-google"></i></a></li>
+				<li><a href="/oauth2/authorization/kakao"><i class="fa-solid fa-comment"></i></a></li>
+				<li><a href="/oauth2/authorization/naver" class="social-menu-naver"><i class="fa-solid fa-n"></i></a></li>
+			</ul>
+		</div>
+
+	</form>
+</div>
+</body>
+</html>
+<script>
+	$(document).ready(function () { //아이디 비번 저장 cookie
+		var key = getCookie("idChk"); //user1
+		if (key != "") {
+			$("#username").val(key);
+		}
+
+		if ($("#username").val() != "") {
+			$("#remember-check").attr("checked", true);
+		}
+
+		$("#remember-check").change(function () {
+			if ($("#remember-check").is(":checked")) {
+				setCookie("idChk", $("#username").val(), 7);
+			} else {
+				deleteCookie("idChk");
+			}
+		});
+
+		$("#username").keyup(function () {
+			if ($("#remember-check").is(":checked")) {
+				setCookie("idChk", $("#username").val(), 7);
+			}
+		});
+	});
+
+	function setCookie(cookieName, value, exdays) {
+		var exdate = new Date();
+		exdate.setDate(exdate.getDate() + exdays);
+		var cookieValue = encodeURIComponent(value) + ((exdays == null) ? "" : "; expires=" + exdate.toGMTString());
+		document.cookie = cookieName + "=" + cookieValue;
+	}
+
+	function deleteCookie(cookieName) {
+		var expireDate = new Date();
+		expireDate.setDate(expireDate.getDate() - 1);
+		document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
+	}
+
+	function getCookie(cookieName) {
+		cookieName = cookieName + '=';
+		var cookieData = document.cookie;
+		var start = cookieData.indexOf(cookieName);
+		var cookieValue = '';
+		if (start != -1) {
+			start += cookieName.length;
+			var end = cookieData.indexOf(';', start);
+			if (end == -1) end = cookieData.length;
+			cookieValue = cookieData.substring(start, end);
+		}
+		return unescape(cookieValue);
+	}
+</script>

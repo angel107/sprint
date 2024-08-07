@@ -1,0 +1,64 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.2'
+	id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17' // 소스 코드 호환성을 Java 17으로 설정
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor // 컴파일-오직 그룹에 annotationProcessor를 확장, 주로 롬복과 같은 어노테이션 프로세서에 사용됩니다.
+	}
+}
+
+repositories {
+	mavenCentral() // 의존성을 찾기 위한 Maven Central 저장소 추가
+}
+
+dependencies {
+	// Spring Boot의 기본 의존성 추가
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // JPA를 사용하는 Spring Boot 응용 프로그램을 위한 스타터
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf' // Thymeleaf 템플릿 엔진 사용을 위한 스타터
+	implementation 'org.springframework.boot:spring-boot-starter-web' // Web 개발을 위한 Spring Boot 스타터
+	
+	compileOnly 'org.projectlombok:lombok' // 롬복, 자바 소스코드를 간결하게 작성할 수 있게 도와주는 라이브러리
+	annotationProcessor 'org.projectlombok:lombok' // 롬복을 어노테이션 프로세서로 사용 설정
+	testImplementation 'org.springframework.boot:spring-boot-starter-test' // 테스트를 위한 Spring Boot 스타터
+	
+	// 기타 의존성 추가
+	implementation "org.springframework.cloud:spring-cloud-starter-openfeign:3.1.0" // OpenFeign을 사용한 선언적 REST 클라이언트 생성을 위한 스타터
+	implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '3.1.2' // MariaDB JDBC 드라이버
+
+	implementation 'org.springframework.security:spring-security-crypto:5.7.1' // 스프링 시큐리티의 암호화 기능 지원
+	implementation 'org.springframework.boot:spring-boot-starter-security' // 스프링 시큐리티 기본 지원
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6' // Thymeleaf에서 Spring Security 지원
+	testImplementation 'org.springframework.security:spring-security-test' // 스프링 시큐리티 테스트 지원
+
+	// 추가적인 Spring Boot 스타터 의존성.
+	implementation('org.springframework.boot:spring-boot-starter-actuator') // 애플리케이션의 상태와 메트릭을 관리하는 데 사용
+	implementation('org.springframework.boot:spring-boot-starter-data-rest') // Spring Data REST를 사용하여 RESTful 서비스 개발을 간소화
+	implementation('org.springframework.boot:spring-boot-starter-jdbc') // JDBC 사용 설정
+	implementation('org.springframework.boot:spring-boot-starter-validation') // Bean Validation API 사용 설정
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client' // OAuth2/OpenID Connect 클라이언트 기능 지원
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
+	// email
+	implementation 'org.springframework:spring-context-support'
+	implementation 'jakarta.mail:jakarta.mail-api:2.0.1'
+	implementation 'com.sun.mail:jakarta.mail:2.0.1'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+	// redis
+	//implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+}
+
+
+tasks.named('test') {
+	useJUnitPlatform() // JUnit Platform을 사용하여 테스트를 실행하도록 설정, JUnit 5 지원을 포함
+}

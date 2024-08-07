@@ -1,0 +1,33 @@
+<th:block th:replace="~{layout/basic :: setContent(~{this::content} )}">
+
+<th:block th:fragment="content">
+  
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+ 	<link href="/css/form-register.css" rel="stylesheet">
+</head>
+<body>
+    <div class="register-l-container " >
+    <form class="register-m-container" th:action="@{/qnaBoard/register}" th:method="post">
+        <div class="form-title">
+            <label>제목</label>
+            <input type="text" class="form-con" id="form-title" name="title" placeholder="제목을 입력해주세요">
+        </div>
+
+        <div class="form-content">
+        <label>내용</label>
+        <textarea type="text" class="form-con" id="form-content" name="content" rows="10"></textarea>
+        </div>
+
+        <input type="submit" id="submit" value="등록">
+    </form> 
+    </div>
+</body>
+</html>
+</th:block>
+</th:block>

@@ -1,0 +1,33 @@
+/* member.css */
+
+.container {
+    margin-top: 50px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.register-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.btn-primary,
+.btn-info {
+    margin-right: 10px;
+}
+.register-container button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px; /* 버튼의 모서리를 둥글게 */
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* 버튼 색상을 부드럽게 변경 */
+
+}
+
+.register-container button:hover {
+    background-color: #555; /* 마우스 오버 시 버튼 색상 변경 */
+}

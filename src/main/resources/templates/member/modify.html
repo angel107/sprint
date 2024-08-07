@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="/css/member.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Thymeleaf 레이아웃 템플릿을 사용 -->
+<th:block th:replace="~{layout/basic :: setContent(~{this::content})}">
+    <th:block th:fragment="content">
+        <div class="container">
+            <h1 class="mt-4">마이페이지</h1>
+            <form>
+                <div class="form-group">
+                    <label for="id">아이디</label>
+                    <input type="text" class="form-control" name="id" id="id" th:value="${dto.id}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">패스워드</label>
+                    <input type="password" class="form-control" name="password" id="password" th:value="${dto.password}">
+                </div>
+
+                <div class="form-group">
+                    <label for="name">이름</label>
+                    <input type="text" class="form-control" name="name" id="name" th:value="${dto.name}">
+                </div>
+
+
+            <div class="register-container">
+                <button type="button" class="btn-primary modifyBtn">수정</button>
+                <button type="button" class="btn-info listBtn">목록으로</button>
+            </div>
+            </form>
+        </div>
+
+        <!-- JavaScript 코드 -->
+        <script>
+            $(document).ready(function() {
+                var form = $("form");
+
+                $(".modifyBtn").click(function() {
+                    if (!confirm("수정하시겠습니까?")) {
+                        return;
+                    }
+
+                    form
+                        .attr("action", "/member/modify")
+                        .attr("method", "post")
+                        .submit();
+                });
+
+                $(".listBtn").click(function() {
+                    form
+                        .attr("action", "/member/list")
+                        .attr("method", "get")
+                        .submit();
+                });
+            });
+        </script>
+    </th:block>
+</th:block>
+</body>
+
+</html>

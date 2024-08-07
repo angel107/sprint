@@ -1,0 +1,103 @@
+<th:block th:replace="~{layout/basic :: setContent(~{this::content} )}">
+
+<th:block th:fragment="content">
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+ 	<link href="/css/form-register.css" rel="stylesheet">
+</head>
+<body>
+    <div class="register-l-container" >
+    <div class="back-button-container">
+
+            <div class="back-button" onclick="history.back()"><i class="fa-solid fa-arrow-left"></i></div>
+        </div>
+    <form class="register-m-container">
+       <input type="hidden" name="no" th:value="${dto.no}">
+        <div class="form-title">
+           <label>제목</label>
+            <input type="text" class="form-con" id="form-title" name="title" th:value="${dto.title}" >
+        </div>
+
+        <div class="form-time">
+        <label>일시</label>
+        <input type="datetime-local" name="runningDate" class="form-con" th:value="${dto.runningDate}">
+        </div>
+
+        <div class="form-location">
+        <label>위치</label>
+        <input type="text" class="form-con" id="form-location" name="location" th:value="${dto.location}">
+        </div>
+
+        <div class="form-content">
+        <label>내용</label>
+        <textarea type="text" class="form-con" id="form-content" name="content" rows="10">[[${dto.content}]]</textarea>
+        </div>
+		<div class="register-container">
+        <input type="submit" id="submit" class="modifyBtn" value="완료">
+        <!--  <input type="submit" id="submit" class="listBtn" value="목록으로"> -->
+<!--         <input type="submit" id="submit-del" class="removeBtn" value="삭제">-->
+        <button type="button" id="submit-del" data-bs-toggle="modal" data-bs-target="#exampleModal">삭제
+        </button>
+ 		</div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">게시물 삭제</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        게시물을 정말 삭제하시겠습니까?
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="no" th:value="${dto.no}">
+                        <button type="submit" id="del" class="cancle" th:value="${dto.no}" >삭제</button>
+                        <button type="button" class="del" data-bs-dismiss="modal">취소</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    </div>
+
+</body>
+</html>
+  <script th:inline="javascript">
+
+        	var form = $("form");
+
+            $(".modifyBtn").click(function() {
+                if(!confirm("수정하시겠습니까?")){
+                    return ;
+                }
+
+                form
+                    .attr("action", "/runningBoard/modify")
+                    .attr("method","post")
+                    .submit();
+            });
+
+            $(".listBtn").click(function() {
+                form
+                    .attr("action", "/runningBoard/list")
+                    .attr("method","get")
+              		.submit();
+            })
+
+            $("#del").click(function(){
+            	form
+                    .attr("action", "/runningBoard/remove")
+                    .attr("method","post")
+                    .submit();
+            });
+
+        </script>
+
+</th:block>
+</th:block>

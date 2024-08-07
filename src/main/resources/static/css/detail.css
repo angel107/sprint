@@ -1,0 +1,258 @@
+/* Reset and global styles */
+* {
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', 'Apple SD Gothic', '맑은고딕', 'Nanum Gothic', sans-serif;
+}
+div {
+    display: block;
+}
+
+/* Container styles */
+.read-l-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #ffffff;
+    box-sizing: border-box;
+}
+.read-m-container {
+    width: 70%;
+    padding: 30px;
+    margin: 0 auto;
+    align-items: center;
+    box-sizing: border-box;
+    background-color: white;
+}
+
+/* Content styles */
+.content-head {
+    width: 100%;
+    align-items: center;
+    border-bottom: 1px solid #000;
+}
+.content-post {
+    width: 100%;
+    align-items: center;
+    margin-top: 20px; /* 위쪽 여백 추가 */
+    margin-bottom: 20px; /* 아래쪽 여백 추가 */
+}
+.content-post h5 {
+    margin: 20px 0; /* 20px top and bottom margin, 0 left and right margin */
+    word-wrap: break-word; /* Break long words */
+}
+
+@media (min-width: 600px) {
+    .content-post h5 {
+        margin: 30px 0;
+    }
+}
+
+@media (min-width: 900px) {
+    .content-post h5 {
+        margin: 40px 0;
+    }
+}
+
+@media (min-width: 900px) {
+    .content-post h5 {
+        margin-top: 40px; /* Further increased margin for even larger screens */
+        margin-bottom: 40px;
+    }
+}
+
+/* First notice styles */
+.notice-first-info {
+    width: 100%;
+    font-size: 16px;
+    color: #333333;
+    display: flex;
+    gap: 20px;
+}
+.container-cate,
+.container-title,
+.container-ID,
+.notice-first-info {
+    margin-bottom: 20px; /* 아래쪽 margin을 추가합니다 */
+}
+
+/* Detail notice styles */
+.notice-detail-info {
+    font-size: 14px;
+    color: #333333;
+}
+
+/* Flexbox styles */
+.flex {
+    display: flex;
+    align-items: center;
+}
+
+/* Icon styles */
+.flex i {
+    margin-right: 15px;
+}
+
+/* Link styles */
+a {
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+/* 하단 - 댓글 */
+.heartBtn {
+    border: none; /* 버튼의 테두리 제거 */
+    background: none; /* 버튼의 배경색 제거 */
+    outline: none; /* 클릭 시 생기는 아웃라인 제거 */
+    cursor: pointer; /* 마우스 커서가 버튼 위에 있을 때 손가락 모양으로 변경 */
+    pointer-events: auto;
+}
+.participateBtn {
+    border: none; /* 버튼의 테두리 제거 */
+    background: none; /* 버튼의 배경색 제거 */
+    outline: none; /* 클릭 시 생기는 아웃라인 제거 */
+    cursor: pointer; /* 마우스 커서가 버튼 위에 있을 때 손가락 모양으로 변경 */
+    pointer-events: auto;
+}
+.participate-info {
+    margin-left: auto;
+}
+
+i {
+    font-size: 24px; /* 아이콘 크기를 24px로 설정 */
+}
+.bottom-logo-info {
+    display: flex;
+    height: 20%;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #000;
+}
+/* 참석자리스트 */
+.user-icon {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip {
+    visibility: hidden;
+    width: 200px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.user-icon:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.comment-count {
+    margin-right: 20px;
+}
+.view-count{
+    margin-right: 20px;
+}
+/* Comment container styles */
+.content-comment {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+/* Comment input styles */
+#comment-input {
+    flex: 1; /* Flex container 안에서 가능한 한 많은 공간을 차지하도록 설정 */
+    height: 40px;
+    margin-right: 10px; /* input과 button 사이의 간격을 조절 */
+    padding: 5px 10px; /* 텍스트와 input 테두리 사이의 간격을 조절 */
+    border: none;
+    border-radius: 5px; /* input의 모서리를 둥글게 */
+    background-color: #f2f2f2;
+    font-size: 14px;
+}
+
+/* Submit button styles */
+#submit, #submit-del {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px; /* 버튼의 모서리를 둥글게 */
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* 버튼 색상을 부드럽게 변경 */
+}
+
+#submit:hover, #submit-del:hover {
+    background-color: #555; /* 마우스 오버 시 버튼 색상 변경 */
+}
+.comment-item {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+}
+
+.comment-writer {
+    font-weight: bold;
+    color: #444;
+}
+
+.comment-content {
+    margin: 10px 0;
+}
+
+.comment-delete {
+    color: #888;
+    font-size: 0.8em;
+}
+
+.bottom-button button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.bottom-button button:hover {
+    background-color: #717ff5;
+}
+.bottom-button {
+    width: 70%;
+    padding: 0px 30px;
+    text-align: right;
+}
+.weather-info {
+    margin-top: -20px;
+}
+.weather-info img {
+    transform-origin: bottom; /* 변형의 기준점을 아래쪽으로 설정 */
+    transform: scale(3); /* 이미지 크기를 1.5배로 확대 */
+}
+.info-container {
+    display: flex;
+}
+.img-container {
+    text-align: center; /* 이미지를 중앙 정렬합니다 */
+    margin: 20px 0; /* 이미지 위아래로 마진을 줍니다 */
+}
+
+.img-container img {
+    max-width: 60%; /* 이미지가 컨테이너를 넘지 않도록 최대 너비를 100%로 설정합니다 */
+    height: auto; /* 이미지의 높이를 자동으로 조절하여 비율을 유지합니다 */
+    border-radius: 8px; /* 이미지 모서리를 둥글게 처리합니다 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 이미지에 그림자 효과를 추가합니다 */
+}
